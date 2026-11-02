@@ -1,0 +1,121 @@
+/* ---------- Theme colours (light = default, dark = [data-theme=dark]) ---------- */
+:root{--bg:#FAF8F5;--card:#F5F0E9;--blush:#F1E9E8;--accent:#D8C8B5;--primary:#6B5143;--on-primary:#FAF8F5;
+--text:#35312E;--muted:#7a6e66;--good:#4f7a55;--bad:#a4453d;--line:#d8c8b5}
+[data-theme=dark]{--bg:#1e1814;--card:#2a221d;--blush:#33292a;--accent:#5a4739;--primary:#c9a98d;--on-primary:#1e1814;
+--text:#ece3d8;--muted:#a8998c;--good:#8fbf96;--bad:#e08a80;--line:#4a3b31}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.55 Inter,system-ui,sans-serif}
+h1,h2,h4{font-family:'Playfair Display',Georgia,serif}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+
+/* ---------- Banner (six photo panels) ---------- */
+.banner{display:flex;height:170px;filter:sepia(.45) contrast(.95)}
+.banner span{flex:1;background:var(--img) center/cover,linear-gradient(160deg,#8a6a55,#3b2a22)}
+.banner span:nth-child(1){--img:url(assets/images/b1.jpg)}
+.banner span:nth-child(2){--img:url(assets/images/b2.jpg);background-color:#6b5143}
+.banner span:nth-child(3){--img:url(assets/images/b3.jpg)}
+.banner span:nth-child(4){--img:url(assets/images/b4.jpg)}
+.banner span:nth-child(5){--img:url(assets/images/b5.jpg)}
+.banner span:nth-child(6){--img:url(assets/images/b6.jpg)}
+.banner span:nth-child(odd){background-blend-mode:normal}
+.banner span:nth-child(2n){filter:brightness(.85)}
+
+/* ---------- Header and navigation ---------- */
+.top{max-width:1180px;margin:0 auto;padding:0 1rem}
+h1{font-size:clamp(2rem,6vw,3.2rem);margin:-1.6rem 0 0;display:flex;align-items:center;gap:.6rem}
+.cap{display:grid;place-items:center;width:3.4rem;height:4rem;border-radius:2rem 2rem .4rem .4rem;background:var(--accent);font-size:1.7rem}
+.dots{margin:.2rem 0 .6rem;color:var(--muted);letter-spacing:.5em;border-bottom:2px dotted var(--accent);padding-bottom:.4rem}
+.tabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem}
+.tabs button{font:500 .95rem 'Lora',serif;background:var(--blush);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:.45rem 1rem;cursor:pointer;white-space:nowrap}
+.tabs button.active{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.tabs .theme{margin-left:auto}
+.tabs.sub{max-width:1180px;margin:0 0 .8rem}
+
+main{max-width:1180px;margin:0 auto;padding:1rem}
+.view[hidden],[hidden]{display:none!important}
+
+/* ---------- Layout ---------- */
+.grid3{display:grid;gap:1.1rem;grid-template-columns:1fr}
+@media(min-width:700px){.grid3{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.grid3{grid-template-columns:.9fr 1.1fr 1fr}}
+.cardgrid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.row{display:flex;gap:.6rem;align-items:center}
+.row.wrap{flex-wrap:wrap;margin-top:1rem}
+.row3{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.stack{display:flex;flex-direction:column;gap:.7rem}
+label{display:flex;flex-direction:column;gap:.25rem;font-weight:500;font-size:.9rem}
+
+/* ---------- Cards (heading bar echoes the Notion template) ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.2rem;margin-bottom:1.1rem}
+.card h2{font:italic 500 1.25rem 'Playfair Display',serif;background:var(--blush);margin:-1.2rem -1.2rem 1rem;padding:.55rem 1.2rem;border-radius:14px 14px 0 0}
+.muted{color:var(--muted);font-size:.9rem}
+.quote{font:italic 1.05rem/1.6 Lora,serif;border-left:3px dotted var(--accent);padding-left:.8rem}
+.tiles{display:flex;gap:.5rem}
+.tiles b{background:var(--primary);color:var(--on-primary);font:700 2.4rem 'Playfair Display',serif;padding:.3rem .9rem;border-radius:8px}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{background:var(--blush);border:1px solid var(--line);border-radius:999px;padding:.15rem .7rem;font-size:.85rem}
+
+/* ---------- Form controls and buttons ---------- */
+input,select,textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.5rem .65rem;width:100%;min-width:0}
+textarea{resize:vertical}
+.btn{font:600 .9rem Inter,sans-serif;background:var(--primary);color:var(--on-primary);border:1px solid var(--primary);border-radius:8px;padding:.55rem 1rem;cursor:pointer}
+.btn.ghost,.tabs .ghost{background:transparent;color:var(--primary)}
+.btn.small{padding:.3rem .7rem;font-size:.8rem}
+.btn.on{background:var(--good);border-color:var(--good);color:#fff}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.error{background:#f6dcd8;color:#7a2a22;border-radius:8px;padding:.6rem .8rem;margin:0}
+[data-theme=dark] .error{background:#4a2a26;color:#f1c4bd}
+.spinner{width:22px;height:22px;border:3px solid var(--accent);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Lists, progress ---------- */
+.list{list-style:none;padding:0;margin:.8rem 0 0}
+.list li{display:flex;align-items:center;gap:.5rem;padding:.4rem 0;border-bottom:1px dotted var(--accent)}
+.list li label{flex:1;flex-direction:row;align-items:center;gap:.5rem;font-weight:400;font-size:1rem}
+.list li.done span{text-decoration:line-through;color:var(--muted)}
+.list .due{color:var(--muted)}
+.list .empty{color:var(--muted);border:0}
+.list.small li{font-size:.85rem}
+.x{background:none;border:0;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1}
+.bar{height:12px;background:var(--blush);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--primary);transition:width .4s}
+
+/* ---------- Subjects ---------- */
+.subj{position:relative;margin:0}
+.subj .x{position:absolute;top:.4rem;right:.6rem}
+.arch{width:60px;height:76px;border-radius:30px 30px 6px 6px;background:linear-gradient(160deg,var(--accent),var(--blush));display:grid;place-items:center;font-size:1.6rem;margin-bottom:.6rem}
+.subj h3{font:600 1.1rem 'Playfair Display',serif;margin:0 0 .2rem}
+
+/* ---------- Summary ---------- */
+.summary{font-family:Lora,serif;line-height:1.75;max-width:75ch}
+.summary h4{font-size:1.15rem;margin:1.2rem 0 .3rem}
+.summary mark{background:var(--accent);color:var(--text);padding:0 .2em;border-radius:3px}
+
+/* ---------- Quiz ---------- */
+.q{border:0;border-bottom:1px dotted var(--accent);padding:0 0 1rem;margin:0 0 1rem}
+.q legend{font:600 1.05rem Lora,serif;padding:0;margin-bottom:.5rem}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.55rem .8rem;margin-bottom:.4rem;cursor:pointer}
+.opt:disabled{cursor:default;color:var(--text)}
+.opt.right{border:2px solid var(--good)}
+.opt.right::after{content:'  ✓ correct'}
+.opt.wrong{border:2px solid var(--bad)}
+.opt.wrong::after{content:'  ✗ your answer'}
+.why{font-size:.9rem;color:var(--muted);margin:.4rem 0 0}
+.score{font:700 1.3rem 'Playfair Display',serif}
+
+/* ---------- Flashcards (3D flip) ---------- */
+.fc-wrap{perspective:800px}
+.flashcard{position:relative;height:160px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s;margin-bottom:.5rem}
+.flashcard.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:1rem;border-radius:12px;backface-visibility:hidden;border:1px solid var(--line);font-family:Lora,serif}
+.front{background:var(--blush)}
+.back{background:var(--primary);color:var(--on-primary);transform:rotateY(180deg)}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,200%);background:var(--primary);color:var(--on-primary);padding:.6rem 1.1rem;border-radius:8px;transition:transform .3s;max-width:90vw;z-index:9}
+.toast.show{transform:translate(-50%,0)}
+.toast.err{background:var(--bad);color:#fff}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:520px){.banner{height:110px}.tiles b{font-size:1.9rem}.row{flex-wrap:wrap}}

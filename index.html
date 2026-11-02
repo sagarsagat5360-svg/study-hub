@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Hub: AI Study Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital@0;1&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Photo banner: drop b1.jpg ... b6.jpg into assets/images/ (gradients show if missing) -->
+<div class="banner" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<header class="top">
+  <h1><span class="cap" aria-hidden="true">🎓</span> Study Hub</h1>
+  <p class="dots" aria-hidden="true">✦ ✦ ✦</p>
+  <nav class="tabs" aria-label="Main">
+    <button data-view="dashboard">Dashboard</button>
+    <button data-view="subjects">Subjects</button>
+    <button data-view="assistant">AI Assistant</button>
+    <button data-view="history">History</button>
+    <button data-view="settings">Settings</button>
+    <button class="theme" data-theme-toggle aria-label="Switch dark or light theme">◐ Theme</button>
+  </nav>
+</header>
+
+<main>
+  <!-- A. DASHBOARD -->
+  <section id="view-dashboard" class="view">
+    <div class="grid3">
+      <div class="col">
+        <div class="card">
+          <h2>Welcome back, scholar</h2>
+          <div class="tiles"><b id="dDay"></b><b id="dMon"></b></div>
+          <p id="dFull" class="muted"></p>
+          <p class="quote" id="quote"></p>
+          <button class="btn" data-view="assistant">Open the AI Study Assistant</button>
+        </div>
+        <div class="card">
+          <h2>Subjects</h2>
+          <div id="subjectChips" class="chips"></div>
+          <p class="muted"><span id="pendingCount">0</span> assignments pending</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h2>Today's study checklist</h2>
+          <form data-add="today" class="row"><input name="text" placeholder="e.g. Revise DBMS normalisation" aria-label="New daily goal"><button class="btn">Add</button></form>
+          <ul id="todayList" class="list"></ul>
+        </div>
+        <div class="card">
+          <h2>Weekly goals</h2>
+          <form data-add="week" class="row"><input name="text" placeholder="e.g. Finish Java unit 3" aria-label="New weekly goal"><button class="btn">Add</button></form>
+          <ul id="weekList" class="list"></ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h2>Study progress</h2>
+          <div class="bar"><i id="progressBar"></i></div>
+          <p id="progressText"></p>
+          <p id="quizAvg" class="muted"></p>
+          <ul id="scoreList" class="list small"></ul>
+        </div>
+        <div class="card">
+          <h2>Assignments and deadlines</h2>
+          <form data-add="tasks" class="stack">
+            <input name="text" placeholder="Assignment title" aria-label="Assignment title">
+            <div class="row"><select name="subject" id="taskSubject" aria-label="Subject"></select><input type="date" name="due" aria-label="Due date"></div>
+            <button class="btn">Add assignment</button>
+          </form>
+          <ul id="taskList" class="list"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B. SUBJECTS -->
+  <section id="view-subjects" class="view" hidden>
+    <div class="card"><h2>Add a subject</h2>
+      <form id="subjectForm" class="row"><input name="text" placeholder="e.g. Operating Systems" aria-label="Subject name"><button class="btn">Add subject</button></form>
+    </div>
+    <div id="subjectGrid" class="cardgrid"></div>
+  </section>
+
+  <!-- C. AI STUDY ASSISTANT -->
+  <section id="view-assistant" class="view" hidden>
+    <form id="aiForm" class="card stack" novalidate>
+      <h2>Generate study material</h2>
+      <label>Topic <input id="topic" placeholder="e.g. Normalisation in DBMS"></label>
+      <label>Class notes <textarea id="notes" rows="8" placeholder="Paste your notes here (optional if you enter a topic)"></textarea></label>
+      <p id="charCount" class="muted">0 / 12000</p>
+      <div class="row3">
+        <label>Subject <select id="subject"></select></label>
+        <label>Explanation style
+          <select id="style"><option value="eli10">Explain like I'm 10</option><option value="exam">Exam-focused</option><option value="detailed">Detailed</option></select></label>
+        <label>Quiz difficulty <select id="difficulty"><option>Easy</option><option selected>Medium</option><option>Hard</option></select></label>
+      </div>
+      <div class="row"><button id="genBtn" class="btn" type="submit">Generate study material</button><span id="spinner" class="spinner" hidden></span></div>
+      <p id="aiError" class="error" role="alert" hidden></p>
+    </form>
+
+    <div id="results" hidden>
+      <div class="tabs sub" role="tablist">
+        <button data-tab="summary">Summary</button>
+        <button data-tab="quiz">Quiz</button>
+        <button data-tab="cards">Flashcards</button>
+        <button id="regenBtn" class="ghost">Regenerate</button>
+      </div>
+      <div id="tab-summary" class="card">
+        <h2 id="resTitle"></h2>
+        <div id="summaryBox" class="summary"></div>
+        <div class="row wrap">
+          <button class="btn" id="copyBtn">Copy summary</button>
+          <button class="btn ghost" id="downloadBtn">Download .txt</button>
+          <button class="btn ghost" id="speakBtn">Read aloud / stop</button>
+        </div>
+      </div>
+      <div id="tab-quiz" class="card" hidden><h2>Quiz</h2><div id="quizBox"></div></div>
+      <div id="tab-cards" class="card" hidden><h2>Flashcards</h2><p id="knownCount" class="muted"></p><div id="cards" class="cardgrid"></div></div>
+    </div>
+  </section>
+
+  <!-- D. HISTORY -->
+  <section id="view-history" class="view" hidden>
+    <div class="card"><h2>Study history</h2>
+      <div class="row"><input id="historySearch" type="search" placeholder="Search topics or subjects" aria-label="Search history"><button class="btn ghost" id="clearHistory">Clear all</button></div>
+      <ul id="historyList" class="list"></ul>
+    </div>
+  </section>
+
+  <!-- E. SETTINGS -->
+  <section id="view-settings" class="view" hidden>
+    <div class="card stack"><h2>Gemini API key</h2>
+      <p class="muted">Saved only in this browser (localStorage). Anyone using this device can read it, so use a free-tier key and never commit it to GitHub.</p>
+      <div class="row"><input id="apiKey" type="password" autocomplete="off" placeholder="Paste your Gemini API key" aria-label="Gemini API key"><button class="btn ghost" id="showKey" type="button">Show</button></div>
+      <div class="row"><button class="btn" id="saveKey">Save key</button><button class="btn ghost" id="removeKey">Remove key</button></div>
+    </div>
+    <div class="card stack"><h2>Preferences</h2>
+      <label>Default explanation style <select id="defaultStyle"></select></label>
+      <button class="btn ghost" data-theme-toggle>Switch dark / light theme</button>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
